@@ -31,7 +31,7 @@ SOFTWARE.
 
 #define WRENCH_VERSION_MAJOR 6
 #define WRENCH_VERSION_MINOR 0
-#define WRENCH_VERSION_BUILD 2
+#define WRENCH_VERSION_BUILD 3
 struct WRState;
 
 /************************************************************************
@@ -304,6 +304,9 @@ WRError wr_compile( const char* source,
 					int* outLen,
 					char* errMsg =0,
 					const uint8_t compilerOptionFlags = WR_INCLUDE_GLOBALS );
+
+// disassemble the bytecode and output humanm readable
+void wr_disassemble( const uint8_t* bytecode, const unsigned int len, char** out, unsigned int* outLen =0 );
 
 // w:          state (see wr_newState)
 // block:      location of bytecode
@@ -892,7 +895,7 @@ public:
 	// this will convert it to an array if it isn't one
 	WRValue& operator[] ( const int index ) { return *asArrayMember( index ); }
 	WRValue* asArrayMember( const int index );
-	const int arraySize() const { return m_value ? m_value->arraySize() : -1; } // returns -1 if this is not an array
+	int arraySize() const { return m_value ? m_value->arraySize() : -1; } // returns -1 if this is not an array
 
 private:
 	WRContext* m_context;
